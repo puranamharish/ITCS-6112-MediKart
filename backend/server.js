@@ -11,7 +11,7 @@ import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/uploadRoutes.js'
 
-dotenv.config()
+dotenv.config({path: './dev.env'})
 
 connectDB()
 
