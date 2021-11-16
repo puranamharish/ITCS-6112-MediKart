@@ -7,6 +7,7 @@ import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
+import { listMyProducts } from '../actions/productActions'
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -29,6 +30,9 @@ const ProfileScreen = ({ location, history }) => {
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
+  const productList = useSelector((state) => state.productList)
+  const { loading: loadingProducts, error: errorProducts, products } = productList
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
@@ -37,6 +41,7 @@ const ProfileScreen = ({ location, history }) => {
         dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
+        dispatch(listMyProducts())
       } else {
         setName(user.name)
         setEmail(user.email)
@@ -112,7 +117,46 @@ const ProfileScreen = ({ location, history }) => {
           </Form>
         )}
       </Col>
-      <Col md={9}>
+      { user.isVendor ? 
+        (<Col md={9}>
+        <h2>My Products</h2>
+        {loadingProducts ? (
+          <Loader />
+        ) : errorProducts ? (
+          <Message variant='danger'>{errorProducts}</Message>
+        ) : (
+          <Table striped bordered hover responsive className='table-sm'>
+            <thead>
+              <tr>
+                <th>NAME</th>
+                <th>AVAILABILITY</th>
+                <th>PRICE</th>
+                <th>EXPIRY</th>
+                <th>MORE INFO</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr key={product._id}>
+                  <td>{product.name}</td>
+                  <td>{product.countInStock}</td>
+                  <td>{product.price}</td>
+                  <td>{product.expiry.substring(0, 10)}</td>
+                  <td>
+                    <LinkContainer to={`/product/${product._id}`}>
+                      <Button className='btn-sm' variant='light'>
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Col>)
+      : (
+        <Col md={9}>
         <h2>My Orders</h2>
         {loadingOrders ? (
           <Loader />
@@ -163,6 +207,7 @@ const ProfileScreen = ({ location, history }) => {
           </Table>
         )}
       </Col>
+      )}
     </Row>
   )
 }

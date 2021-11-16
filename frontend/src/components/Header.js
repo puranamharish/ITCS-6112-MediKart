@@ -25,13 +25,18 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+          { (userInfo == null || !userInfo.isVendor) && (
             <Route render={({ history }) => <SearchBox history={history} />} />
+          )}
             <Nav className='ml-auto'>
-              <LinkContainer to='/cart'>
+              { (userInfo == null || !userInfo.isVendor) && (
+                <LinkContainer to='/cart'>
                 <Nav.Link>
                   <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
-              </LinkContainer>
+                </LinkContainer>
+              )}
+              
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
