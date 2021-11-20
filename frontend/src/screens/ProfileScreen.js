@@ -58,6 +58,10 @@ const ProfileScreen = ({ location, history }) => {
     }
   }
 
+  const createProductHandler = () => {
+    history.push('/vendor/product/create')
+  }
+
   return (
     <Row>
       <Col md={3}>
@@ -119,7 +123,16 @@ const ProfileScreen = ({ location, history }) => {
       </Col>
       { user.isVendor ? 
         (<Col md={9}>
-        <h2>My Products</h2>
+        <Row className='align-items-center'>
+        <Col>
+          <h2>My Products</h2>
+        </Col>
+        <Col className='text-right'>
+          <Button className='my-3' onClick={createProductHandler}>
+            <i className='fas fa-plus'></i> Create Product
+          </Button>
+        </Col>
+      </Row>
         {loadingProducts ? (
           <Loader />
         ) : errorProducts ? (

@@ -44,7 +44,7 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid />
+              <Image src='https://harishitama.s3.amazonaws.com/Dummy1.jpeg' alt={product.name} fluid />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
