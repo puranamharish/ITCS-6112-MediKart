@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
+import uploadFileToS3 from '../components/UploadFileToS3'
 import FormContainer from '../components/FormContainer'
 import { createProduct } from '../actions/productActions'
 import { listMyProducts } from '../actions/productActions'
@@ -38,22 +39,16 @@ const ProductEditScreen = ({ match, history }) => {
   })
 
   const uploadFileHandler = async (e) => {
+
     const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
     setUploading(true)
 
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-
-      const { data } = await axios.post('/api/upload', formData, config)
-
-      setImage(data)
-      setUploading(false)
+      uploadFileToS3(file).then((data) => {
+        console.log(data)
+        setImage(data.Location)
+        setUploading(false)
+      })
     } catch (error) {
       console.error(error)
       setUploading(false)
@@ -142,14 +137,10 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='imagePath'>
+            <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={imagePath}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
+              <img src={imagePath} alt="Uploaded Image" width="500" height="300"
+               style={{marginBottom: '8px'}}/>
               <Form.File
                 id='image-file'
                 label='Choose File'

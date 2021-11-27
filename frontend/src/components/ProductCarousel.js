@@ -25,7 +25,7 @@ const ProductCarousel = () => {
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>
-            <Image src='https://harishitama.s3.amazonaws.com/Dummy1.jpeg' alt={product.name} fluid />
+            <Image src={product.imagePath} alt={product.name} fluid />
             <Carousel.Caption className='carousel-caption'>
               <h2>
                 {product.name} (${product.price})

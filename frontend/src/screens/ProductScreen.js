@@ -44,14 +44,16 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image src='https://harishitama.s3.amazonaws.com/Dummy1.jpeg' alt={product.name} fluid />
+              <Image src={product.imagePath} alt={product.name} fluid />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h3>{product.name}</h3>
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                { userInfo.isVendor && (
+                  <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                )}
                 <ListGroup.Item>Description: {product.description}</ListGroup.Item>
                 
                 { userInfo.isVendor && (<>
@@ -73,7 +75,14 @@ const ProductScreen = ({ history, match }) => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
-
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>RxRequired:</Col>
+                      <Col>
+                        <strong>{product.isRxRequired ? 'Yes' : 'No'}</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
                   <ListGroup.Item>
                     <Row>
                       <Col>Status:</Col>
