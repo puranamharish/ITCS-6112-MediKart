@@ -1,8 +1,8 @@
 import AWS from 'aws-sdk'
 
-const AWS_ACCESSKEY_ID = 'AKIAYTQODWH57NZ45NZT'
-const AWS_SECRET_KEY = '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'
-const S3_BUCKET = 'harishitama'
+const AWS_ACCESSKEY_ID = 'AKIAW3IWDYYVGMO4WK6C'
+const AWS_SECRET_KEY = '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'
+const S3_BUCKET = 'medikartimagedump/Images'
 const REGION = 'us-east-1'
 
 AWS.config.update({

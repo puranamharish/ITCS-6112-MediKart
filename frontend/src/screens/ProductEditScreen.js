@@ -45,10 +45,11 @@ const ProductEditScreen = ({ match, history }) => {
 
     try {
       uploadFileToS3(file).then((data) => {
-        console.log(data)
         setImage(data.Location)
         setUploading(false)
-      })
+      }).catch(error =>
+        setUploading(false)
+      )
     } catch (error) {
       console.error(error)
       setUploading(false)
@@ -140,7 +141,9 @@ const ProductEditScreen = ({ match, history }) => {
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
               <img src={imagePath} alt="Uploaded Image" width="500" height="300"
-               style={{marginBottom: '8px'}}/>
+               style={{marginBottom: '8px'}}
+               onLoad={(event) => event.target.style.display = 'block' }
+               onError={(event) => event.target.style.display = 'none' }/>
               <Form.File
                 id='image-file'
                 label='Choose File'

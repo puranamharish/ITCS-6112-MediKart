@@ -5,12 +5,14 @@ import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Meta from '../components/Meta'
+import uploadFileToS3 from '../components/UploadFileToS3'
 import {
   listProductDetails,
 } from '../actions/productActions'
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
+  const [prescriptionPath, setPrescription] = useState('')
 
   const dispatch = useDispatch()
 
@@ -28,6 +30,19 @@ const ProductScreen = ({ history, match }) => {
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
+
+  const uploadFileHandler = async (e) => {
+
+    const file = e.target.files[0]
+
+    try {
+      uploadFileToS3(file).then((data) => {
+        setPrescription(data.Location)
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -92,6 +107,18 @@ const ProductScreen = ({ history, match }) => {
                     </Row>
                   </ListGroup.Item>
 
+                  {product.isRxRequired && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Prescription:</Col>
+                      <Col>
+                      <Form.File id='image-file'
+                      onChange={uploadFileHandler}></Form.File>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                  )}
+
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <Row>
@@ -114,13 +141,12 @@ const ProductScreen = ({ history, match }) => {
                       </Row>
                     </ListGroup.Item>
                   )}
-
                   <ListGroup.Item>
                     <Button
                       onClick={addToCartHandler}
                       className='btn-block'
                       type='button'
-                      disabled={product.countInStock === 0}
+                      disabled={product.countInStock === 0 || (product.isRxRequired ? !(prescriptionPath.length > 0) : false)}
                     >
                       Add To Cart
                     </Button>
