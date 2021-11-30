@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
+import { Row, Col, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Meta from '../components/Meta'
@@ -47,7 +47,7 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <Link className='btn btn-light my-3' to={userInfo.isVendor ? '/profile' : '/'}>
+      <Link className='btn btn-light my-3' to={userInfo && userInfo.isVendor ? '/profile' : '/'}>
         Go Back
       </Link>
       {loading ? (
@@ -59,26 +59,26 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image src={product.imagePath} alt={product.name} fluid />
+              <Card.Img src={product.imagePath} alt={product.name} fluid />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h3>{product.name}</h3>
                 </ListGroup.Item>
-                { userInfo.isVendor && (
+                { userInfo && userInfo.isVendor && (
                   <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
                 )}
                 <ListGroup.Item>Description: {product.description}</ListGroup.Item>
                 
-                { userInfo.isVendor && (<>
+                {  userInfo && userInfo.isVendor && (<>
                     <ListGroup.Item>Manufacturer: {product.manufacturer}</ListGroup.Item>
                     <ListGroup.Item>Expiry: {product.expiry ? product.expiry.substring(0, 10) : ''}</ListGroup.Item>
                     <ListGroup.Item>In Stock: {product.countInStock}</ListGroup.Item>
                     <ListGroup.Item>Is RxRequired: {product.isRxRequired ? 'Yes' : 'No'}</ListGroup.Item></>)}
               </ListGroup>
             </Col>
-            { !userInfo.isVendor && (
+            { userInfo && !userInfo.isVendor && (
               <Col md={3}>
               <Card>
                 <ListGroup variant='flush'>

@@ -3,6 +3,9 @@ import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
   PRODUCT_LIST_FAIL,
+  PRODUCT_MY_LIST_REQUEST,
+  PRODUCT_MY_LIST_SUCCESS,
+  PRODUCT_MY_LIST_FAIL,
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_SUCCESS,
   PRODUCT_DETAILS_FAIL,
@@ -51,7 +54,7 @@ export const listMyProducts = () => async (
   dispatch, getState
 ) => {
   try {
-    dispatch({ type: PRODUCT_LIST_REQUEST })
+    dispatch({ type: PRODUCT_MY_LIST_REQUEST })
 
     const {
       userLogin: { userInfo },
@@ -66,12 +69,12 @@ export const listMyProducts = () => async (
     const { data } = await axios.get(`/api/products/myproducts`, config)
 
     dispatch({
-      type: PRODUCT_LIST_SUCCESS,
+      type: PRODUCT_MY_LIST_SUCCESS,
       payload: data,
     })
   } catch (error) {
     dispatch({
-      type: PRODUCT_LIST_FAIL,
+      type: PRODUCT_MY_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

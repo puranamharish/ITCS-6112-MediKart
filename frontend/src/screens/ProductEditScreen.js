@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
@@ -7,7 +6,6 @@ import Loader from '../components/Loader'
 import uploadFileToS3 from '../components/UploadFileToS3'
 import FormContainer from '../components/FormContainer'
 import { createProduct } from '../actions/productActions'
-import { listMyProducts } from '../actions/productActions'
 
 const ProductEditScreen = ({ match, history }) => {
 
@@ -24,17 +22,11 @@ const ProductEditScreen = ({ match, history }) => {
   const dispatch = useDispatch()
 
   const productCreate = useSelector((state) => state.productCreate)
-  const {
-    loading: loadingCreate,
-    error: errorCreate,
-    success: successCreate,
-    product: createdProduct,
-  } = productCreate
+  const { success: successCreate } = productCreate
 
   useEffect(() => {
     if (successCreate) {
-      dispatch(listMyProducts())
-      history.push('/profile')
+      history.goBack()
     }
   })
 
@@ -133,6 +125,7 @@ const ProductEditScreen = ({ match, history }) => {
               <Form.Label>Expiry</Form.Label>
               <Form.Control
                 type='date'
+                min={new Date().toISOString().split("T")[0]}
                 placeholder='Expiry date'
                 onChange={(e) => setExpiry(e.target.value)}
               ></Form.Control>
@@ -140,7 +133,7 @@ const ProductEditScreen = ({ match, history }) => {
 
             <Form.Group controlId='image'>
               <Form.Label>Image</Form.Label>
-              <img src={imagePath} alt="Uploaded Image" width="500" height="300"
+              <img src={imagePath} alt="Uploaded pic" width="500" height="300"
                style={{marginBottom: '8px'}}
                onLoad={(event) => event.target.style.display = 'block' }
                onError={(event) => event.target.style.display = 'none' }/>

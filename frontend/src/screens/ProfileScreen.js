@@ -7,7 +7,9 @@ import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
-import { listMyProducts } from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import { listMyProducts, deleteProduct } from '../actions/productActions'
+import Meta from '../components/Meta'
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -30,8 +32,14 @@ const ProfileScreen = ({ location, history }) => {
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
-  const productList = useSelector((state) => state.productList)
-  const { loading: loadingProducts, error: errorProducts, products } = productList
+  const productMyList = useSelector((state) => state.productMyList)
+  const { loading: loadingProducts, error: errorProducts, products } = productMyList
+
+  const productDelete = useSelector((state) => state.productDelete)
+  const { success: successDelete} = productDelete
+
+  const productCreate = useSelector((state) => state.productCreate)
+  const { success: successCreate} = productCreate
 
   useEffect(() => {
     if (!userInfo) {
@@ -42,12 +50,15 @@ const ProfileScreen = ({ location, history }) => {
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
         dispatch(listMyProducts())
+      } if (successCreate || successDelete) {
+        dispatch(listMyProducts())
+        dispatch({type: PRODUCT_CREATE_RESET})
       } else {
         setName(user.name)
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user, success])
+  }, [dispatch, history, userInfo, user, successDelete, success, successCreate])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -58,11 +69,19 @@ const ProfileScreen = ({ location, history }) => {
     }
   }
 
+  const deleteHandler = (id) => {
+    if (window.confirm('Are you sure')) {
+      dispatch(deleteProduct(id))
+    }
+  }
+
   const createProductHandler = () => {
     history.push('/vendor/product/create')
   }
 
   return (
+    <>
+    <Meta title='Profile' />
     <Row>
       <Col md={3}>
         <h2>User Profile</h2>
@@ -146,6 +165,7 @@ const ProfileScreen = ({ location, history }) => {
                 <th>PRICE</th>
                 <th>EXPIRY</th>
                 <th>MORE INFO</th>
+                <th>REMOVE</th>
               </tr>
             </thead>
             <tbody>
@@ -161,6 +181,14 @@ const ProfileScreen = ({ location, history }) => {
                         Details
                       </Button>
                     </LinkContainer>
+                  </td>
+                  <td>
+                    <Button
+                      variant='danger'
+                      className='btn-sm'
+                      onClick={() => deleteHandler(product._id)}>
+                      <i className='fas fa-trash'></i>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -222,6 +250,7 @@ const ProfileScreen = ({ location, history }) => {
       </Col>
       )}
     </Row>
+    </>
   )
 }
 
