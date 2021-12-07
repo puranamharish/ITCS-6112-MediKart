@@ -10,7 +10,6 @@ const products = [
     countInStock: 100,
     price: 9.49,
     isRxRequired: false,
-    user: ObjectId('61aecf76e15aeb0df4093380'),
     imagePath: 'https://medikartimagedump.s3.amazonaws.com/Images/Airborne.jpg'
   },
   {
