@@ -13,8 +13,7 @@ const products = [
   {
     id: 2,
     name: 'BENADRYL ALLERGY ULTRA TABLETS 24CT',
-    description: 'Benadryl Allergy anti-histamine tablets (Diphenhydramine HCl 25 mg) temporarily relieve allergy and common cold symptoms, including runny nose, sneezing, itchy nose and throat, and itchy, watery eyes.
-',
+    description: 'Benadryl Allergy anti-histamine tablets (Diphenhydramine HCl 25 mg) temporarily relieve allergy and common cold symptoms, including runny nose, sneezing, itchy nose and throat, and itchy, watery eyes.',
     manufacturer: 'Benadryl',
     expiry: '10-10-2025',
     countInStock: 100,
@@ -25,8 +24,7 @@ const products = [
   {
     id: 3,
     name: 'MUCINEX DM MAXIMUM STRENGTH 12-HOUR EXPECTORANT AND COUGH SUPPRESSANT TABLETS, 14 CT',
-    description: 'Quiets wet & dry coughs. Thins & loosens mucus that causes chest congestion Starts to work right away & lasts for 12 hours, Maximum Strength, Extended-release bi-layer tablet. Mucinex is the #1 doctor recommended OTC expectorant among Internists, General Practitioners & Family Practitioners
-'
+    description: 'Quiets wet & dry coughs. Thins & loosens mucus that causes chest congestion Starts to work right away & lasts for 12 hours, Maximum Strength, Extended-release bi-layer tablet. Mucinex is the #1 doctor recommended OTC expectorant among Internists, General Practitioners & Family Practitioners'
     manufacturer: 'Mucinex',
     expiry: '09-09-2025',
     countInStock: 10,
