@@ -30,7 +30,7 @@ const products = [
     countInStock: 10,
     price: 9.49,
     isRxRequired: false,
-    imagePath: 'https://medikartimagedump.s3.amazonaws.com/Images/Amazon.com+_+Mucinex+DM+Maximum+Strength+12-Hour+Expectorant+and+Cough+Suppressant+Tablets%2C+14+ct+_+Health+Care+Products+_+Health+%26+Household.html'
+    imagePath: 'https://medikartimagedump.s3.amazonaws.com/Images/Mucinex.png'
   },
   {
     id: 4,
