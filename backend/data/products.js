@@ -1,4 +1,5 @@
-import ObjectId from 'mongodb'
+import mongoose from 'mongoose'
+const { Types: { ObjectId } } = mongoose;
 const products = [
   {
     id: 1,
