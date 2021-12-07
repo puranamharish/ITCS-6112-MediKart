@@ -1,14 +1,14 @@
 const products = [
   {
     id: 1,
-    name: 'Azythromycin',
-    description: 'Works for covid',
-    manufacturer: 'Cipla',
-    expiry: Date(),
-    countInStock: 3,
-    price: 49.99,
-    isRxRequired: true,
-    imagePath: ''
+    name: 'AIRBORNE ASSORTED FRUIT GUMMIES 21CT',
+    description: 'Airborne Original Gummies provides immune support in a great-tasting and easy-to-take form. Each serving (3) gummies delivers 750 mg of Vitamin C and is high in antioxidants (Vitamins C & E), and is an excellent source of Selenium. Also contains a proprietary herbal blend with Echinacea & Ginger. Airborne Original Gummies help support your immune system.*',
+    manufacturer: 'Airborne',
+    expiry: '09-09-2025',
+    countInStock: 100,
+    price: 9.49,
+    isRxRequired: false,
+    imagePath: 's3://medikartimagedump/Images/Airborne.jpg'
   },
   {
     id: 2,
